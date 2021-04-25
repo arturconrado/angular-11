@@ -1,16 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {CalculadoraModule} from './calculadora/module/calculadora.module';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
+
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    TestBed.resetTestEnvironment();
+    TestBed.initTestEnvironment(BrowserDynamicTestingModule,
+      platformBrowserDynamicTesting());
+
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        CalculadoraModule
       ],
       declarations: [
         AppComponent
       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
   });
 
@@ -29,7 +39,9 @@ describe('AppComponent', () => {
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('untitled app is running!');
+    const app = fixture.debugElement.componentInstance;
+    //const compiled = fixture.debugElement.nativeElement;
+    expect(app.title).toEqual('untitled');
+    //expect(compiled.querySelector('.content title').textContent).toContain('untitled app is running!');
   });
 });
